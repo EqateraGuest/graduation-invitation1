@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Graduation Invitation</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <img src="images/invitation.png"
+         class="invitation"
+         alt="Graduation Invitation">
+
+
+
+    <section class="event-details">
+
+    </section>
+
+    <section class="register">
+
+
+        <h2>Register for Your Entry Pass</h2>
+
+
+        <p>
+        Please enter your details below.
+        </p>
+
+
+
+        <form id="guestForm">
+
+
+            <input
+            type="text"
+            id="name"
+            placeholder="Full Name"
+            required>
+
+
+
+            <input
+            type="tel"
+            id="phone"
+            placeholder="Phone Number"
+            required>
+
+
+
+            <button type="submit">
+
+            🎟 Get My Entry Pass
+
+            </button>
+
+
+        </form>
+
+
+    </section>
+
+
+
+
+
+
+    <section id="ticket" class="ticket">
+
+
+        <h2>
+        🎓 Graduation Entry Pass
+        </h2>
+
+
+
+        <div id="guestName"></div>
+
+
+
+        <div id="qrcode"></div>
+
+<a
+href="https://maps.app.goo.gl/dAtfRPDZ3Zf8v83n8"
+target="_blank"
+class="map-btn">
+
+🗺️ View Location on Google Maps
+
+</a>
+        <button id="downloadBtn">
+
+        ⬇ Download My Pass
+
+        </button>
+        <br></br>
+ <p class="instruction">
+
+        Show this QR code at the entrance.
+
+        </p>
+<p class="instruction">
+
+       For any questions or assistance, please reach us at:
++251 930012160
+
+        </p>
+
+
+    </section>
+
+
+
+
+</div>
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script type="module" src="script.js"></script>
+
+</body>
+
+</html>
