@@ -1,8 +1,8 @@
 import { db } from "./firebase.js";
 
 import {
-  collection,
-  addDoc
+    doc,
+    setDoc
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 const form = document.getElementById("guestForm");
@@ -20,38 +20,37 @@ form.addEventListener("submit", async function (e) {
     const name = document.getElementById("name").value.trim();
     const phone = document.getElementById("phone").value.trim();
 
-    if(name === "" || phone === ""){
+    if (name === "" || phone === "") {
         alert("Please fill all fields.");
         return;
     }
 
+    // Generate unique ticket ID
     currentTicketId =
         "GRAD-" +
         Date.now() +
         "-" +
         Math.random()
-        .toString(36)
-        .substring(2,8)
-        .toUpperCase();
+            .toString(36)
+            .substring(2, 8)
+            .toUpperCase();
 
-    try{
+    try {
 
-        await addDoc(collection(db,"guests"),{
+        // Save guest using the ticket ID as the Firestore document ID
+        await setDoc(doc(db, "guests", currentTicketId), {
 
-            name:name,
-            phone:phone,
-            ticketId:currentTicketId,
-            checkedIn:false,
-            checkInTime:null,
-            createdAt:new Date()
+            name: name,
+            phone: phone,
+            checkedIn: false,
+            checkInTime: null,
+            createdAt: new Date()
 
         });
 
-        console.log("Guest saved.");
+        console.log("Guest saved successfully.");
 
-    }
-
-    catch(error){
+    } catch (error) {
 
         console.error(error);
 
@@ -61,47 +60,47 @@ form.addEventListener("submit", async function (e) {
 
     }
 
-    ticket.style.display="block";
+    // Show ticket
+    ticket.style.display = "block";
 
-    guestName.innerHTML=`
-        <strong>${name}</strong>
-    `;
+    // Show only the guest name
+    guestName.innerHTML = `<strong>${name}</strong>`;
 
-    qrContainer.innerHTML="";
+    // Clear previous QR
+    qrContainer.innerHTML = "";
 
-    new QRCode(qrContainer,{
-        text:currentTicketId,
-        width:220,
-        height:220
+    // Generate QR
+    new QRCode(qrContainer, {
+        text: currentTicketId,
+        width: 220,
+        height: 220
     });
 
+    // Scroll to ticket
     ticket.scrollIntoView({
-        behavior:"smooth"
+        behavior: "smooth"
     });
 
 });
 
-downloadBtn.addEventListener("click",function(){
+downloadBtn.addEventListener("click", function () {
 
-    html2canvas(ticket,{
-        scale:3,
-        backgroundColor:"#ffffff"
-    })
+    html2canvas(ticket, {
+        scale: 3,
+        backgroundColor: "#ffffff"
+    }).then(canvas => {
 
-    .then(canvas=>{
+        const link = document.createElement("a");
 
-        const link=document.createElement("a");
+        const name = document.getElementById("name")
+            .value
+            .trim()
+            .replace(/\s+/g, "-")
+            .toLowerCase();
 
-        const name=document
-        .getElementById("name")
-        .value
-        .trim()
-        .replace(/\s+/g,"-")
-        .toLowerCase();
+        link.download = `${name}-graduation-pass.png`;
 
-        link.download=name+"-graduation-pass.png";
-
-        link.href=canvas.toDataURL("image/png");
+        link.href = canvas.toDataURL("image/png");
 
         link.click();
 
